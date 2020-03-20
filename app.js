@@ -1,9 +1,9 @@
 const express = require('express');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(express.json());
 
 // Add all the hosts that will make requests to the service
