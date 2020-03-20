@@ -12,7 +12,7 @@ describe('Test /', () => {
   test('It should respond 200 status to POST request for / with a single cookie', async done => {
     const response = await request(app)
       .post('/')
-      .set('origin', 'https://www.simoahava.com')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
       .set('Content-Type', 'application/json')
       .send(JSON.stringify({name: '_ga', value: '12345'}));
 
@@ -25,7 +25,7 @@ describe('Test /', () => {
   test('It should respond 200 status to POST request for / with multiple cookies', async done => {
     const response = await request(app)
       .post('/')
-      .set('origin', 'https://www.simoahava.com')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
       .set('Content-Type', 'application/json')
       .send(JSON.stringify([{name: '_ga', value: '12345'},{name: '_ga2', value: '123456'}]));
 
@@ -38,7 +38,7 @@ describe('Test /', () => {
   test('It should respond 200 status to POST request for / with invalid body', async done => {
     const response = await request(app)
       .post('/')
-      .set('origin', 'https://www.simoahava.com')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
       .set('Content-Type', 'application/json')
       .send([1,2,3]);
 
@@ -51,7 +51,7 @@ describe('Test /', () => {
   test('It should respond 200 status to POST request for / with invalid cookie object', async done => {
     const response = await request(app)
       .post('/')
-      .set('origin', 'https://www.simoahava.com')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
       .set('Content-Type', 'application/json')
       .send({name: 'hello', noValue: true});
 
@@ -64,7 +64,7 @@ describe('Test /', () => {
   test('It should throw a CORS error with invalid origin', async done => {
     const response = await request(app)
       .post('/')
-      .set('origin', 'https://www.derekahava.com')
+      .set( 'origin', 'https://www.EXAMPLE-DOMAIN-NOT-IN-WHITELIST.com' )
       .set('Content-Type', 'application/json')
       .send();
 

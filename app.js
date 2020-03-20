@@ -1,14 +1,14 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(express.json());
 
 // Add all the hosts that will make requests to the service
 const allowedHosts = [
-  'https://www.mydomain.com'
+  'https://www.EXAMPLE-DOMAIN.com'
 ];
 
 const corsOptions = {
@@ -26,6 +26,7 @@ const corsOptions = {
 app.options('/', cors(corsOptions));
 
 app.post('/', cors(corsOptions), (req, res, next) => {
+
   const msg = req.body;
   const cookies = Array.isArray(msg) ? msg : [msg];
   const hasSet = [];
