@@ -85,4 +85,19 @@ describe('Test /', () => {
 
   });
 
+  test('It should set cookies properly', async done => {
+    const cookiesToSet = { name : '_ga', value : '12345' };
+    const response = await request(app)
+      .post('/')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify( cookiesToSet ));
+
+    expect( response.headers['set-cookie'] ).toEqual( ["_ga=12345; Path=/"] ); // TODO use flexible cookie parsing
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({msg: 'Processed cookies: _ga'});
+    done();
+
+  });
+
 });
