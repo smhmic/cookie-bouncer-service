@@ -85,7 +85,7 @@ describe('Test /', () => {
 
   });
 
-  test('It should set cookies properly', async done => {
+  test('It should set basic cookies properly without applying defaults', async done => {
     const cookiesToSet = { name : '_ga', value : '12345' };
     const response = await request(app)
       .post('/')
@@ -94,6 +94,33 @@ describe('Test /', () => {
       .send(JSON.stringify( cookiesToSet ));
 
     expect( response.headers['set-cookie'] ).toEqual( ["_ga=12345; Path=/"] ); // TODO use flexible cookie parsing
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({msg: 'Processed cookies: _ga'});
+    done();
+
+  });
+  
+  
+  test('It should set cookies with additional settings properly', async done => {
+    const cookiesToSet = { 
+      name : '_ga', 
+      value : '12345', 
+      options : { 
+        domain: 'EXAMPLE-DOMAIN.com',
+        path:'/testpath',
+        //maxAge: 730*24*60*60*1000, TODO: test maxAge/expires
+        //httpOnly : false, // Do not need to support this flag, as this library is for setting cookies for JS 
+        sameSite:'None', 
+        secure:true 
+      } };
+    const response = await request(app)
+      .post('/')
+      .set('origin', 'https://www.EXAMPLE-DOMAIN.com')
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify( cookiesToSet ));
+
+    //throw new Error( response.headers[ 'set-cookie' ] );
+    expect( response.headers['set-cookie'] ).toEqual( ["_ga=12345; Domain=EXAMPLE-DOMAIN.com; Path=/testpath; Secure; SameSite=None"] ); // TODO use flexible cookie parsing
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({msg: 'Processed cookies: _ga'});
     done();
