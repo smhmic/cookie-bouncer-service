@@ -70,6 +70,19 @@ describe('Test /', () => {
 
     expect(response.statusCode).toBe(500);
     done();
-  })
+  });
+
+  test('It should respond 200 status to POST request for / with valid subdomain', async done => {
+    const response = await request(app)
+      .post('/')
+      .set('origin', 'https://subdomain.EXAMPLE-TOP-LEVEL-DOMAIN.com')
+      .set('Content-Type', 'application/json')
+      .send({name: 'hello', noValue: true});
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({msg: 'Processed cookies: '});
+    done();
+
+  });
 
 });

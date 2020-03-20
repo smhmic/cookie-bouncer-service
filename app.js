@@ -8,15 +8,19 @@ app.use(express.json());
 
 // Add all the hosts that will make requests to the service
 const allowedHosts = [
-  'https://www.EXAMPLE-DOMAIN.com'
+  'https://www.EXAMPLE-DOMAIN.com',
+  /^https:\/\/(.*\.)?EXAMPLE-TOP-LEVEL-DOMAIN\.com$/
 ];
 
 const corsOptions = {
   origin: (origin, cb) => {
-    if (allowedHosts.indexOf(origin) > -1) {
-      cb(null, true);
-    } else {
-      cb(new Error(`CORS error! Attempt to reach API from ${origin}`));
+    if( ! allowedHosts.some( (h) => {
+      if( h === origin || h && h.test && h.test( origin ) ){
+        cb( null, true );
+        return true;
+      }
+    })){
+      cb( new Error( `CORS error! Attempt to reach API from ${origin}` ) );
     }
   },
   methods: 'POST',
