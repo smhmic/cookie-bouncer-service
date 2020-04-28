@@ -27,9 +27,14 @@ const corsOptions = {
   credentials: true
 };
 
-app.options('/', cors(corsOptions));
+app.options('*', cors(corsOptions));
 
-app.post('/', cors(corsOptions), (req, res, next) => {
+app.get('*', cors(corsOptions), (req, res, next) => {
+  res.set( 'Content-Type', 'text/plain' );
+  res.status( 405 ).send( `GET Not Allowed` );
+});
+
+app.post('*', cors(corsOptions), (req, res, next) => {
 
   const msg = req.body;
   const cookies = Array.isArray(msg) ? msg : [msg];

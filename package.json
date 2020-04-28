@@ -1,13 +1,13 @@
 {
   "name": "ga-cname-cookie-rewrite",
-  "version": "1.0.1",
-  "description": "GA CNAME cookie rewrite for Google Cloud Functions",
+  "version": "1.0.2",
+  "description": "Server-side cookie proxy (for addressing browser restrictions on cookies set by js)",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "jest --coverage --detectOpenHandles"
   },
-  "author": "Simo Ahava",
+  "author": "Simo Ahava (mod by Stephen M. Harris)",
   "license": "MIT",
   "repository": {
     "type": "git",
